@@ -55,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Spreadsheet ID and range
     $spreadsheetId = '1J7yQN4LfqTYltgBJGeXAvH9ymPmvL0eXlHGNS0Pnufg';
     $range = 'Лист1'; // Update this with your sheet name
-
+    $date =  date('Y-m-d H:i:s');
 
     $values = [
-        [$name, $email, $phone, date('Y-m-d H:i:s')],
+        [$name, $email, $phone, $date],
     ];
 
     $body = new Google_Service_Sheets_ValueRange(['values' => $values]);
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     if ($result->getUpdates()->getUpdatedCells() > 0) {
-        echo json_encode(['success' => true, 'message' => 'Данные валидны '. date('Y-m-d H:i:s')], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['success' => true, 'message' => 'Данные валидны '. $date], JSON_UNESCAPED_UNICODE);
     } else {
         echo json_encode(['success' => false, 'message' => 'Ошибка при отправке данных в Google Sheets'], JSON_UNESCAPED_UNICODE);
     }
